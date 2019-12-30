@@ -1,10 +1,18 @@
-const express = require("express"); // import express
+const express = require("express");
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oath20").Strategy;
+
 const app = express(); // create express app
 
+// create new instance of Google Passport Strategy
+// passport.use --> telling passport that there is a new strategy available
+passport.use(new GoogleStrategy());
+
 // create first route handler
-app.get("/", (req, res) => {
-  res.send({ hi: "there" });
-});
+// this was really just a test route handler
+// app.get("/", (req, res) => {
+//   res.send({ hi: "there" });
+// });
 
 /*  instructs express to tell Node that it wants to listen for incoming traffic
  *  on PORT. Node is actually the one listening for the request. If process.env.PORT
