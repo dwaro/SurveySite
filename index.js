@@ -1,41 +1,26 @@
 const express = require("express");
+const mongoose = require("mongoose");
+const cookieSession = require("cookie-session");
 const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const keys = require("./config/keys");
+require("./models/user");
+require("./services/passport");
+
+mongoose.connect(keys.mongoURI);
 
 const app = express(); // create express app
 
-// create new instance of Google Passport Strategy
-// passport.use --> telling passport that there is a new strategy available
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: keys.googleClientID,
-      clientSecret: keys.googleClientSecret,
-      callbackURL: "/auth/google/callback"
-    },
-    (accessToken, refreshToken, profile, done) => {
-      console.log("access token:", accessToken);
-      console.log("refresh token:", refreshToken);
-      console.log("profile:", profile);
-    }
-  )
-);
-
-app.get(
-  "/auth/google",
-  passport.authenticate("google", {
-    scope: ["profile", "email"] //asking google for access to user's profile and email info
+app.use(
+  cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days, but expressed in milliseconds
+    keys: [keys.cookieKey]
   })
 );
 
-app.get("/auth/google/callback", passport.authenticate("google"));
+app.use(passport.initialize());
+app.use(passport.session());
 
-// create first route handler
-// this was really just a test route handler
-// app.get("/", (req, res) => {
-//   res.send({ hi: "there" });
-// });
+require("./routes/authRoutes")(app);
 
 /*  instructs express to tell Node that it wants to listen for incoming traffic
  *  on PORT. Node is actually the one listening for the request. If process.env.PORT
