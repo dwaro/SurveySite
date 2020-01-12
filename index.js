@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cookieSession = require("cookie-session");
 const passport = require("passport");
+const bodyParser = require("body-parser");
 const keys = require("./config/keys");
 require("./models/user");
 require("./services/passport");
@@ -10,6 +11,7 @@ mongoose.connect(keys.mongoURI);
 
 const app = express(); // create express app
 
+app.use(bodyParser.json());
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days, but expressed in milliseconds
@@ -21,6 +23,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require("./routes/authRoutes")(app);
+require("./routes/billingRoutes")(app);
 
 /*  instructs express to tell Node that it wants to listen for incoming traffic
  *  on PORT. Node is actually the one listening for the request. If process.env.PORT
