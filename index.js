@@ -14,6 +14,7 @@ const app = express(); // create express app
 app.use(bodyParser.json());
 app.use(
   cookieSession({
+    name: "session",
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days, but expressed in milliseconds
     keys: [keys.cookieKey]
   })
