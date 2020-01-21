@@ -12,7 +12,7 @@ class Mailer extends helper.Mail {
     this.body = new helper.Content("text/html", content);
     this.recipients = this.formatAddress(recipients);
 
-    this.addContent(this.body);
+    this.addContent(this.body); // built-in with SendGrid
     this.addClickTracking();
     this.addRecipients();
   }
