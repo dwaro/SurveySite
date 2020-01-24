@@ -1,10 +1,11 @@
 // SurveyField contains logic to render a single label and render input
 import React from "react";
 
-export default () => {
+export default ({ input, label }) => {
   return (
     <div>
-      <input />
+      <label>{label}</label>
+      <input {...input} />
     </div>
   );
 };

@@ -5,8 +5,11 @@ const Dashboard = () => {
   return (
     <div>
       Dashboard
-      <div class="fixed-action-btn">
-        <Link to="/surveys/new" class="btn-floating btn-large teal lighten-2">
+      <div className="fixed-action-btn">
+        <Link
+          to="/surveys/new"
+          className="btn-floating btn-large teal lighten-2"
+        >
           <i className="large material-icons">add</i>
         </Link>
       </div>
