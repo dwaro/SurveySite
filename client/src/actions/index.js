@@ -1,6 +1,8 @@
 import axios from "axios";
 import { FETCH_USER } from "./types";
 
+// not positive if will be using this??
+//
 // export const changeLogin = shouldBeLoggedIn => {
 //   return {
 //     type: "change_auth",
